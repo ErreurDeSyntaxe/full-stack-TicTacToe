@@ -23,16 +23,24 @@ function Gameboard() {
                 board[i][2].getValue());
         }
         console.log("************");
-    }
+    };
 
     const writeToken = (row, column, token) => {
         if (board[row][column].getValue() === "-") {
             board[row][column].setValue(token);
             return true;
         } return false;
-    }
+    };
 
-    return { getBoard, printBoard, writeToken };
+    const resetBoard = () => {
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+                board[i][j].setValue("-");
+            }
+        }
+    };
+
+    return { getBoard, printBoard, writeToken , resetBoard };
 };
 
 function Cell() {
@@ -74,6 +82,27 @@ function GameController() {
         console.log("************");
     };
 
+    const endGame = (string) => {
+        board.printBoard();
+        if (string == "tie") {
+            console.log("++++++++++++");
+            console.log("++++++++++++");
+            console.log("The game is a tie.");
+            console.log("++++++++++++");
+            console.log("++++++++++++");
+        } else {
+            console.log("++++++++++++");
+            console.log("++++++++++++");
+            console.log(string + " wins!");
+            console.log("++++++++++++");
+            console.log("++++++++++++");
+        }
+        nthRound = 0;
+        board.resetBoard();
+        activePlayer = players[0];
+        printRound();
+    };
+
     const playRound = (row, column) => {
         let player = getActivePlayer();
         //if the player's move was valid
@@ -86,53 +115,44 @@ function GameController() {
             if (current[0][0].getValue() == player.token && 
             current[0][1].getValue() == player.token && 
             current[0][2].getValue() == player.token) {
-                board.printBoard();
-                console.log(player.name + " wins!");
+                endGame(player.name);
             } else if (current[1][0].getValue() == player.token && 
             current[1][1].getValue() == player.token && 
             current[1][2].getValue() == player.token) {
-                board.printBoard();
-                console.log(player.name + " wins!");
+                endGame(player.name);
             } else if (current[2][0].getValue() == player.token && 
             current[2][1].getValue() == player.token && 
             current[2][2].getValue() == player.token) {
-                board.printBoard();
-                console.log(player.name + " wins!");
+                endGame(player.name);
             }
             //check columns
             else if (current[0][0].getValue() == player.token && 
             current[1][0].getValue() == player.token && 
             current[2][0].getValue() == player.token) {
-                board.printBoard();
-                console.log(player.name + " wins!");
+                endGame(player.name);
             } else if (current[0][1].getValue() == player.token && 
             current[1][1].getValue() == player.token && 
             current[2][1].getValue() == player.token) {
-                board.printBoard();
-                console.log(player.name + " wins!");
+                endGame(player.name);
             } else if (current[0][2].getValue() == player.token && 
             current[1][2].getValue() == player.token && 
             current[2][2].getValue() == player.token) {
-                board.printBoard();
-                console.log(player.name + " wins!");
+                endGame(player.name);
             }
             //check diagonals
             else if (current[0][0].getValue() == player.token && 
             current[1][1].getValue() == player.token && 
             current[2][2].getValue() == player.token) {
-                board.printBoard();
-                console.log(player.name + " wins!");
+                endGame(player.name);
             }
             else if (current[2][0].getValue() == player.token && 
             current[1][1].getValue() == player.token && 
             current[0][2].getValue() == player.token) {
-                board.printBoard();
-                console.log(player.name + " wins!");
+                endGame(player.name);
             }
             //no win so far => check for tie
             else if (nthRound == 9) {
-                board.printBoard();
-                console.log("It's a tie");
+                endGame("tie");
             }
             //no win, no tie, the game continues
             else {
