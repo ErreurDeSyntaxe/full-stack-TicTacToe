@@ -19,13 +19,15 @@ An in-browser game of Tic Tac Toe
 -CSS  
 -JavaScript  
 -OOP  
--factory function  
+-factory functions  
 -scope  
 -modules  
 
 # Challenges
 
--A challenge followed by a double space  
+-Getting started with the project  
+-OOP  
+-factory functions  
 
 # Lessons
 
