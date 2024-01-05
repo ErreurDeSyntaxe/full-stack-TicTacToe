@@ -5,6 +5,7 @@ function Gameboard() {
     const columns = 3;
     const board = [];
 
+    //create the board in a 2D array
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < columns; j++) {
@@ -55,6 +56,7 @@ function GameController() {
     ];
 
     let activePlayer = players[0];
+    let nthRound = 0;
 
     const switchPlayer = () => {
         if (activePlayer === players[0]) {
@@ -73,21 +75,79 @@ function GameController() {
     };
 
     const playRound = (row, column) => {
-        if (board.writeToken(row, column, getActivePlayer().token)) {
+        let player = getActivePlayer();
+        //if the player's move was valid
+        if (board.writeToken(row, column, player.token)) {
+            //will check for a tie later
+            nthRound++;
             //win conditions
-            // if (board[0][0].getValue() == "X") {
-            //     console.log(getActivePlayer().name + " wins!");
-            // }
-            console.log(board[0][1].getValue());
-            switchPlayer();
-            printRound();
+            let current = board.getBoard();
+            //check rows
+            if (current[0][0].getValue() == player.token && 
+            current[0][1].getValue() == player.token && 
+            current[0][2].getValue() == player.token) {
+                board.printBoard();
+                console.log(player.name + " wins!");
+            } else if (current[1][0].getValue() == player.token && 
+            current[1][1].getValue() == player.token && 
+            current[1][2].getValue() == player.token) {
+                board.printBoard();
+                console.log(player.name + " wins!");
+            } else if (current[2][0].getValue() == player.token && 
+            current[2][1].getValue() == player.token && 
+            current[2][2].getValue() == player.token) {
+                board.printBoard();
+                console.log(player.name + " wins!");
+            }
+            //check columns
+            else if (current[0][0].getValue() == player.token && 
+            current[1][0].getValue() == player.token && 
+            current[2][0].getValue() == player.token) {
+                board.printBoard();
+                console.log(player.name + " wins!");
+            } else if (current[0][1].getValue() == player.token && 
+            current[1][1].getValue() == player.token && 
+            current[2][1].getValue() == player.token) {
+                board.printBoard();
+                console.log(player.name + " wins!");
+            } else if (current[0][2].getValue() == player.token && 
+            current[1][2].getValue() == player.token && 
+            current[2][2].getValue() == player.token) {
+                board.printBoard();
+                console.log(player.name + " wins!");
+            }
+            //check diagonals
+            else if (current[0][0].getValue() == player.token && 
+            current[1][1].getValue() == player.token && 
+            current[2][2].getValue() == player.token) {
+                board.printBoard();
+                console.log(player.name + " wins!");
+            }
+            else if (current[2][0].getValue() == player.token && 
+            current[1][1].getValue() == player.token && 
+            current[0][2].getValue() == player.token) {
+                board.printBoard();
+                console.log(player.name + " wins!");
+            }
+            //no win so far => check for tie
+            else if (nthRound == 9) {
+                board.printBoard();
+                console.log("It's a tie");
+            }
+            //no win, no tie, the game continues
+            else {
+                switchPlayer();
+                printRound();
+            }
         }
+        //The move was invalid
         else {
             console.log("That cell is already taken. Play again.");
             printRound();
         }
     };
 
+    //the initial board
     printRound();
 
     return { playRound };
