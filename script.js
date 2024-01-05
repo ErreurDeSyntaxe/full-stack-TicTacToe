@@ -27,7 +27,8 @@ function Gameboard() {
     const writeToken = (row, column, token) => {
         if (board[row][column].getValue() === "-") {
             board[row][column].setValue(token);
-        }
+            return true;
+        } return false;
     }
 
     return { getBoard, printBoard, writeToken };
@@ -45,5 +46,51 @@ function Cell() {
     return { getValue, setValue };
 };
 
-const game = Gameboard();
-game.printBoard();
+function GameController() {
+    const board = Gameboard();
+
+    const players = [
+        { name: "Player 1 (X)", token: "X" },
+        { name: "Player 2 (O)", token: "O" }
+    ];
+
+    let activePlayer = players[0];
+
+    const switchPlayer = () => {
+        if (activePlayer === players[0]) {
+            activePlayer = players[1];
+        } else {
+            activePlayer = players[0];
+        }
+    };
+
+    const getActivePlayer = () => activePlayer;
+
+    const printRound = () => {
+        board.printBoard();
+        console.log(getActivePlayer().name + "'s turn to play");
+        console.log("************");
+    };
+
+    const playRound = (row, column) => {
+        if (board.writeToken(row, column, getActivePlayer().token)) {
+            //win conditions
+            // if (board[0][0].getValue() == "X") {
+            //     console.log(getActivePlayer().name + " wins!");
+            // }
+            console.log(board[0][1].getValue());
+            switchPlayer();
+            printRound();
+        }
+        else {
+            console.log("That cell is already taken. Play again.");
+            printRound();
+        }
+    };
+
+    printRound();
+
+    return { playRound };
+};
+
+const game = GameController();
