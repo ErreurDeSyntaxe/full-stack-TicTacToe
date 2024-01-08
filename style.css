@@ -32,8 +32,15 @@ footer {
     text-align: center;
 }
 
+#activePlayer,
+#winner {
+    font-size : 3rem;
+    text-align: center;
+    margin-top: 10px;;
+}
+
 .gameArea {
-    margin-top: 100px;
+    margin-top: 70px;
     display: grid;
     grid-template-columns: repeat(3, 200px);
     grid-template-rows: repeat(3, 200px);
@@ -48,9 +55,9 @@ footer {
     background-color: transparent;
     font-size: 6rem;
     border: 0;
-    & .button:hover {
-        background-color: aqua;
-    }
+}
+.button:hover {
+    background-color: aqua;
 }
 
 .square {
@@ -82,4 +89,23 @@ footer {
 .square4,
 .square1 {
     border-left: 0;
+}
+
+dialog {
+    height: 150px;
+    width: 900px;
+    border: 0;
+    border-radius: 5px;
+    padding: 8px;
+    margin: auto auto;
+    font-size: 3rem;
+    text-align: center;
+    background-color: cadetblue;
+    & button {
+        height: 40px;
+        width: 80px;
+        font-size: 2rem;
+        border: 2px solid rgb(0, 0, 0);
+        border-radius: 5px;
+    }
 }

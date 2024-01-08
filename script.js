@@ -65,6 +65,7 @@ function GameController() {
 
     let activePlayer = players[0];
     let nthRound = 0;
+    let gameOver = false;
 
     const switchPlayer = () => {
         if (activePlayer === players[0]) {
@@ -84,33 +85,28 @@ function GameController() {
     };
 
     const endGame = (string) => {
-        const winnerDiv = document.querySelector(".winner");
+        const winnerDiv = document.querySelector("#winner");
         board.printBoard();
         if (string == "tie") {
-            console.log("++++++++++++");
-            console.log("++++++++++++");
             console.log("The game is a tie.");
             winnerDiv.textContent = "The game is a tie.";
-            console.log("++++++++++++");
-            console.log("++++++++++++");
         } else {
-            console.log("++++++++++++");
-            console.log("++++++++++++");
             winnerDiv.textContent = `${string} wins!`;
-            console.log(string + " wins!");
-            console.log("++++++++++++");
-            console.log("++++++++++++");
+            console.log(string + " wins!");           
         }
-        newGame();
+        gameOver = true;
     };
 
+    const isGameOver = () => gameOver;
+
     const newGame = () => {
-        const winnerDiv = document.querySelector(".winner");
+        const winnerDiv = document.querySelector("#winner");
         winnerDiv.textContent = "";
         nthRound = 0;
         board.resetBoard();
         activePlayer = players[0];
         printRound();
+        gameOver = false;
     }
 
     const playRound = (row, column) => {
@@ -181,16 +177,31 @@ function GameController() {
     //the initial board
     printRound();
 
-    return { playRound, getActivePlayer , newGame };
+    return { playRound, getActivePlayer , newGame , isGameOver };
 };
 
 function ScreenController() {
     const game = GameController();
-    const activePlayerDiv = document.querySelector(".activePlayer");
+    const activePlayerDiv = document.querySelector("#activePlayer");
+    const winningPlayerDiv = document.querySelector("#winner");
     const gameAreaDiv = document.querySelector(".gameArea");
+    const dialog = document.querySelector("dialog");
+    const yesButton = document.querySelector("#yesButton");
+    const noButton = document.querySelector("#noButton");
     
-    let activePlayer = game.getActivePlayer();
-
+    yesButton.addEventListener("click", () => {
+        game.newGame();
+        resetButtons();
+        activePlayerDiv.textContent = "Player 1 (X)'s turn";
+        winningPlayerDiv.textContent = "Who will win?";
+        dialog.close();
+    });
+    noButton.addEventListener("click", () => {
+        activePlayerDiv.textContent = "Thank you for playing!";
+        winningPlayerDiv.textContent = "See you next time."
+        dialog.close();
+    });
+    
     const buildBoard = () => {
         for (let i = 1; i <= 9; i++) {
             const square = document.createElement("div");
@@ -208,60 +219,116 @@ function ScreenController() {
         }
     };
 
+    const resetButtons = () => {
+        for (let i = 1; i <= 9; i++) {
+            let string = ".button" + i;
+            document.querySelector(string).textContent = "";
+        }
+    }
+
+    const offerRematch = () => {
+        dialog.showModal();
+    }
+
     const handleClick = () => {
         document.querySelector(".button1").addEventListener("click", () => {
             let activePlayer = game.getActivePlayer();
             if (game.playRound(0, 0) != false) {
                 document.querySelector(".button1").textContent = activePlayer.token;
+                activePlayerDiv.textContent = game.getActivePlayer().name + "'s turn";
+            }
+            if (game.isGameOver()) {
+                activePlayerDiv.textContent = "Game over!";
+                offerRematch();
             }
         });
         document.querySelector(".button2").addEventListener("click", () => {
             let activePlayer = game.getActivePlayer();
             if (game.playRound(0, 1) != false) {
                 document.querySelector(".button2").textContent = activePlayer.token;
+                activePlayerDiv.textContent = game.getActivePlayer().name + "'s turn";
             }
+            if (game.isGameOver()) {
+                activePlayerDiv.textContent = "Game over!";
+                offerRematch();
+        }
         });
         document.querySelector(".button3").addEventListener("click", () => {
             let activePlayer = game.getActivePlayer();
             if (game.playRound(0, 2) != false) {
                 document.querySelector(".button3").textContent = activePlayer.token;
+                activePlayerDiv.textContent = game.getActivePlayer().name + "'s turn";
             }
+            if (game.isGameOver()) {
+                activePlayerDiv.textContent = "Game over!";
+                offerRematch();
+        }
         });
         document.querySelector(".button4").addEventListener("click", () => {
             let activePlayer = game.getActivePlayer();
             if (game.playRound(1, 0) != false) {
                 document.querySelector(".button4").textContent = activePlayer.token;
+                activePlayerDiv.textContent = game.getActivePlayer().name + "'s turn";
             }
+            if (game.isGameOver()) {
+                activePlayerDiv.textContent = "Game over!";
+                offerRematch();
+        }
         });
         document.querySelector(".button5").addEventListener("click", () => {
             let activePlayer = game.getActivePlayer();
             if (game.playRound(1, 1) != false) {
                 document.querySelector(".button5").textContent = activePlayer.token;
+                activePlayerDiv.textContent = game.getActivePlayer().name + "'s turn";
             }
+            if (game.isGameOver()) {
+                activePlayerDiv.textContent = "Game over!";
+                offerRematch();
+        }
         });
         document.querySelector(".button6").addEventListener("click", () => {
             let activePlayer = game.getActivePlayer();
             if (game.playRound(1, 2) != false) {
                 document.querySelector(".button6").textContent = activePlayer.token;
+                activePlayerDiv.textContent = game.getActivePlayer().name + "'s turn";
             }
+            if (game.isGameOver()) {
+                activePlayerDiv.textContent = "Game over!";
+                offerRematch();
+        }
         });
         document.querySelector(".button7").addEventListener("click", () => {
             let activePlayer = game.getActivePlayer();
             if (game.playRound(2, 0) != false) {
                 document.querySelector(".button7").textContent = activePlayer.token;
+                activePlayerDiv.textContent = game.getActivePlayer().name + "'s turn";
             }
+            if (game.isGameOver()) {
+                activePlayerDiv.textContent = "Game over!";
+                offerRematch();
+        }
         });
         document.querySelector(".button8").addEventListener("click", () => {
             let activePlayer = game.getActivePlayer();
             if (game.playRound(2, 1) != false) {
                 document.querySelector(".button8").textContent = activePlayer.token;
+                activePlayerDiv.textContent = game.getActivePlayer().name + "'s turn";
             }
+            if (game.isGameOver()) {
+                activePlayerDiv.textContent = "Game over!";
+                offerRematch();
+        }
         });
         document.querySelector(".button9").addEventListener("click", () => {
             let activePlayer = game.getActivePlayer();
             if (game.playRound(2, 2) != false) {
                 document.querySelector(".button9").textContent = activePlayer.token;
+                activePlayerDiv.textContent = game.getActivePlayer().name + "'s turn";
             }
+            if (game.isGameOver()) {
+                activePlayerDiv.textContent = "Game over!";
+                offerRematch();
+        }
         });
     };
 
