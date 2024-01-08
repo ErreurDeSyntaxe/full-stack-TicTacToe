@@ -45,6 +45,9 @@ footer {
     width: 180px;
     margin-top: 10px;
     cursor: pointer;
+    background-color: transparent;
+    font-size: 6rem;
+    border: 0;
     & .button:hover {
         background-color: aqua;
     }

@@ -80,28 +80,38 @@ function GameController() {
         board.printBoard();
         console.log(getActivePlayer().name + "'s turn to play");
         console.log("************");
+        console.log("");
     };
 
     const endGame = (string) => {
+        const winnerDiv = document.querySelector(".winner");
         board.printBoard();
         if (string == "tie") {
             console.log("++++++++++++");
             console.log("++++++++++++");
             console.log("The game is a tie.");
+            winnerDiv.textContent = "The game is a tie.";
             console.log("++++++++++++");
             console.log("++++++++++++");
         } else {
             console.log("++++++++++++");
             console.log("++++++++++++");
+            winnerDiv.textContent = `${string} wins!`;
             console.log(string + " wins!");
             console.log("++++++++++++");
             console.log("++++++++++++");
         }
+        newGame();
+    };
+
+    const newGame = () => {
+        const winnerDiv = document.querySelector(".winner");
+        winnerDiv.textContent = "";
         nthRound = 0;
         board.resetBoard();
         activePlayer = players[0];
         printRound();
-    };
+    }
 
     const playRound = (row, column) => {
         let player = getActivePlayer();
@@ -164,13 +174,100 @@ function GameController() {
         else {
             console.log("That cell is already taken. Play again.");
             printRound();
+            return false;
         }
     };
 
     //the initial board
     printRound();
 
-    return { playRound };
+    return { playRound, getActivePlayer , newGame };
 };
 
-const game = GameController();
+function ScreenController() {
+    const game = GameController();
+    const activePlayerDiv = document.querySelector(".activePlayer");
+    const gameAreaDiv = document.querySelector(".gameArea");
+    
+    let activePlayer = game.getActivePlayer();
+
+    const buildBoard = () => {
+        for (let i = 1; i <= 9; i++) {
+            const square = document.createElement("div");
+            let string1 = "square" + i;
+            square.classList.add("square");
+            square.classList.add(string1);
+
+            const btn = document.createElement("button");
+            let string2 = "button" + i;
+            btn.classList.add("button");
+            btn.classList.add(string2);
+
+            square.appendChild(btn);
+            gameAreaDiv.appendChild(square);
+        }
+    };
+
+    const handleClick = () => {
+        document.querySelector(".button1").addEventListener("click", () => {
+            let activePlayer = game.getActivePlayer();
+            if (game.playRound(0, 0) != false) {
+                document.querySelector(".button1").textContent = activePlayer.token;
+            }
+        });
+        document.querySelector(".button2").addEventListener("click", () => {
+            let activePlayer = game.getActivePlayer();
+            if (game.playRound(0, 1) != false) {
+                document.querySelector(".button2").textContent = activePlayer.token;
+            }
+        });
+        document.querySelector(".button3").addEventListener("click", () => {
+            let activePlayer = game.getActivePlayer();
+            if (game.playRound(0, 2) != false) {
+                document.querySelector(".button3").textContent = activePlayer.token;
+            }
+        });
+        document.querySelector(".button4").addEventListener("click", () => {
+            let activePlayer = game.getActivePlayer();
+            if (game.playRound(1, 0) != false) {
+                document.querySelector(".button4").textContent = activePlayer.token;
+            }
+        });
+        document.querySelector(".button5").addEventListener("click", () => {
+            let activePlayer = game.getActivePlayer();
+            if (game.playRound(1, 1) != false) {
+                document.querySelector(".button5").textContent = activePlayer.token;
+            }
+        });
+        document.querySelector(".button6").addEventListener("click", () => {
+            let activePlayer = game.getActivePlayer();
+            if (game.playRound(1, 2) != false) {
+                document.querySelector(".button6").textContent = activePlayer.token;
+            }
+        });
+        document.querySelector(".button7").addEventListener("click", () => {
+            let activePlayer = game.getActivePlayer();
+            if (game.playRound(2, 0) != false) {
+                document.querySelector(".button7").textContent = activePlayer.token;
+            }
+        });
+        document.querySelector(".button8").addEventListener("click", () => {
+            let activePlayer = game.getActivePlayer();
+            if (game.playRound(2, 1) != false) {
+                document.querySelector(".button8").textContent = activePlayer.token;
+            }
+        });
+        document.querySelector(".button9").addEventListener("click", () => {
+            let activePlayer = game.getActivePlayer();
+            if (game.playRound(2, 2) != false) {
+                document.querySelector(".button9").textContent = activePlayer.token;
+            }
+        });
+    };
+
+    return { buildBoard, handleClick };
+}
+
+const screen = ScreenController();
+screen.buildBoard();
+screen.handleClick();
