@@ -1,4 +1,5 @@
 # full-stack-tictactoe
+
 An in-browser game of Tic Tac Toe
 
 # Preview
@@ -11,7 +12,7 @@ An in-browser game of Tic Tac Toe
 
 -[Assignment Page (Jan '24)](https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe)
 
--[Finished Project](https://erreurdesyntaxe.github.io/full-stack-TicTacToe/)
+-[Finished Project](https://erreurdesyntaxe.github.io/full-stack-tictactoe/)
 
 # Notable Features
 
@@ -21,16 +22,16 @@ An in-browser game of Tic Tac Toe
 -OOP  
 -factory functions  
 -scope  
--modules  
+-modules
 
 # Challenges
 
 -Getting started with the project  
 -OOP  
--factory functions  
+-factory functions
 
 # Diary
 
 I relied heavily on tutorials and guides to do this project. The concept of
 factory functions was difficult to grasp, and I am still unsure whether I have
-learned something or if it was just mechanical without any understanding. 
+learned something or if it was just mechanical without any understanding.
